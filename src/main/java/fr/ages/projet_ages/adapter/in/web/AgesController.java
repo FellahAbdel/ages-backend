@@ -1,22 +1,22 @@
 package fr.ages.projet_ages.adapter.in.web;
 
+import fr.ages.projet_ages.application.domain.model.Ages;
+import fr.ages.projet_ages.application.port.in.GetAgesDataUseCase;
 import fr.ages.projet_ages.application.port.in.SendAgesDataCommand;
 import fr.ages.projet_ages.application.port.in.SendAgesDataUseCase;
 import fr.ages.projet_ages.common.WebAdapter;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @WebAdapter
 @RestController
 @RequestMapping("/ages")
+@RequiredArgsConstructor
 public class AgesController {
     private final SendAgesDataUseCase sendAgesDataUseCase;
-
-    public AgesController(SendAgesDataUseCase sendAgesDataUseCase) {
-        this.sendAgesDataUseCase = sendAgesDataUseCase;
-    }
+    private final GetAgesDataUseCase getAgesDataUseCase;
 
 
     @PostMapping(path = "/add/{titre}/{desc}")
@@ -27,6 +27,12 @@ public class AgesController {
         SendAgesDataCommand command = new SendAgesDataCommand(titre, desc);
 
         sendAgesDataUseCase.sendAgesData(command);
+    }
+
+    @GetMapping(path = "/get/{id}/")
+    ResponseEntity<Ages> receiveAgesData(@PathVariable("id") Long id){
+        Ages agesData = getAgesDataUseCase.getAgesData(id);
+        return new ResponseEntity<>(agesData, HttpStatus.OK);
     }
 
 //    @PutMapping("/update/{titre}/{desc}")
