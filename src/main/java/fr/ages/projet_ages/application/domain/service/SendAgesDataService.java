@@ -18,7 +18,8 @@ public class SendAgesDataService implements SendAgesDataUseCase {
     public boolean sendAgesData(SendAgesDataCommand command) {
         Ages agesData = new Ages();
         agesData.setTitre(command.titre());
-        agesData.setDescription(command.desc());
+        agesData.setDescription(command.description());
+        agesData.setObjectif(command.objectif());
         writeAgesDataPort.writeAgesData(agesData);
         return false;
     }

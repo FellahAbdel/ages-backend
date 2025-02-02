@@ -10,6 +10,7 @@ public class AgesMapper {
         domainEntity.setId(ages.getId());
         domainEntity.setTitre(ages.getTitre());
         domainEntity.setDescription(ages.getDescription());
+        domainEntity.setObjectif(ages.getObjectif());
         return domainEntity;
     }
 
@@ -18,6 +19,7 @@ public class AgesMapper {
         jpaDomainEntity.setId(ages.getId());
         jpaDomainEntity.setTitre(ages.getTitre());
         jpaDomainEntity.setDescription(ages.getDescription());
+        jpaDomainEntity.setObjectif(ages.getObjectif());
         return jpaDomainEntity;
     }
 }

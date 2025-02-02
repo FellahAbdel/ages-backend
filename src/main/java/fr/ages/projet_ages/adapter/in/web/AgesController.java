@@ -19,12 +19,14 @@ public class AgesController {
     private final GetAgesDataUseCase getAgesDataUseCase;
 
 
-    @PostMapping(path = "/add/{titre}/{desc}")
+    @PostMapping(path = "/add/")
     void sendAgesData(
-        @PathVariable("titre") String titre,
-        @PathVariable("desc") String desc
+            @RequestBody Ages ages
     ){
-        SendAgesDataCommand command = new SendAgesDataCommand(titre, desc);
+        String titre = ages.getTitre();
+        String desc = ages.getDescription();
+        String objectif = ages.getObjectif();
+        SendAgesDataCommand command = new SendAgesDataCommand(titre, desc, objectif);
 
         sendAgesDataUseCase.sendAgesData(command);
     }

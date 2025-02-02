@@ -7,6 +7,7 @@ import lombok.*;
 @Table(name = "ages")
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class AgesJPAEntity {
     @Id
     @GeneratedValue
@@ -18,27 +19,6 @@ public class AgesJPAEntity {
     @Column(name = "Descrition", length = 500, nullable = false, unique = false)
     private String description;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitre() {
-        return titre;
-    }
-
-    public void setTitre(String titre) {
-        this.titre = titre;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    @Column(name = "Objectif", length = 500, nullable = false, unique = false)
+    private String objectif;
 }
