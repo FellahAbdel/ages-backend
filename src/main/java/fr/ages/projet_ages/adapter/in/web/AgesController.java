@@ -26,7 +26,7 @@ public class AgesController {
         String titre = ages.getTitre();
         String desc = ages.getDescription();
         String objectif = ages.getObjectif();
-        SendAgesDataCommand command = new SendAgesDataCommand(titre, desc, objectif);
+        SendAgesDataCommand command = new SendAgesDataCommand(titre, desc, objectif, null);
 
         boolean result = sendAgesDataUseCase.sendAgesData(command);
         if (result) {
@@ -42,9 +42,19 @@ public class AgesController {
         return new ResponseEntity<>(agesData, HttpStatus.OK);
     }
 
-//    @PutMapping("/update/{titre}/{desc}")
-//    public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee) {
-//        Employee updateEmployee = employeeService.updateEmployee(employee);
-//        return new ResponseEntity<>(updateEmployee, HttpStatus.OK);
-//    }
+    @PutMapping("/update/")
+    public ResponseEntity<String> updateAgesData(@RequestBody Ages ages) {
+        String titre = ages.getTitre();
+        String desc = ages.getDescription();
+        String objectif = ages.getObjectif();
+        Long id = ages.getId();
+        SendAgesDataCommand command = new SendAgesDataCommand(titre, desc, objectif, id);
+
+        boolean result = sendAgesDataUseCase.sendAgesDataForUpdate(command);
+        if (result) {
+            return ResponseEntity.ok("Data successfully updated.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to process data.");
+        }
+    }
 }
