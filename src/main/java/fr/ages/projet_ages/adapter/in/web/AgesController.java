@@ -20,7 +20,7 @@ public class AgesController {
 
 
     @PostMapping(path = "/add/")
-    void sendAgesData(
+    ResponseEntity<String> sendAgesData(
             @RequestBody Ages ages
     ){
         String titre = ages.getTitre();
@@ -28,7 +28,12 @@ public class AgesController {
         String objectif = ages.getObjectif();
         SendAgesDataCommand command = new SendAgesDataCommand(titre, desc, objectif);
 
-        sendAgesDataUseCase.sendAgesData(command);
+        boolean result = sendAgesDataUseCase.sendAgesData(command);
+        if (result) {
+            return ResponseEntity.ok("Data successfully processed.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to process data.");
+        }
     }
 
     @GetMapping(path = "/get/{id}/")

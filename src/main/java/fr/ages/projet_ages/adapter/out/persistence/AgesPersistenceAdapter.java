@@ -5,6 +5,7 @@ import fr.ages.projet_ages.application.port.out.LoadAgesDataPort;
 import fr.ages.projet_ages.application.port.out.WriteAgesDataPort;
 import fr.ages.projet_ages.common.PersistenceAdapter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.Optional;
 
@@ -15,8 +16,17 @@ public class AgesPersistenceAdapter implements WriteAgesDataPort, LoadAgesDataPo
     private final AgesMapper agesMapper;
 
     @Override
-    public void writeAgesData(Ages ages) {
+    public boolean writeAgesData(Ages ages) {
+        try {
             agesRepository.save(agesMapper.mapToJpaEntity(ages));
+            return true;
+        } catch (DataIntegrityViolationException e) {
+            System.err.println("Data integrity violation: " + e.getMessage());
+            return false;
+        } catch (Exception e) {
+            System.err.println("Error saving data: " + e.getMessage());
+            return false;
+        }
     }
 
     @Override

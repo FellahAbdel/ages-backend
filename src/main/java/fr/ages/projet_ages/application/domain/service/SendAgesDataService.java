@@ -20,7 +20,6 @@ public class SendAgesDataService implements SendAgesDataUseCase {
         agesData.setTitre(command.titre());
         agesData.setDescription(command.description());
         agesData.setObjectif(command.objectif());
-        writeAgesDataPort.writeAgesData(agesData);
-        return false;
+        return writeAgesDataPort.writeAgesData(agesData);
     }
 }
